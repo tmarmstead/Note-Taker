@@ -1,18 +1,19 @@
 // Dependencies
 const express = require('express');
-const path = require('path');
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
 
+// Initializing Express
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 5000;
 
+// Set Up Express
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(express.static('public'));
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
-// Create Routes for notes.html and index.html
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
-app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'notes.html')));
-
-
-// Create API Routes (GET and POST)
 
 // Listen to PORT
 app.listen(PORT, () => {
